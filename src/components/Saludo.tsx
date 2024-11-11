@@ -1,10 +1,14 @@
+import { CSSProperties } from "react"
+
 interface Props {
   nombre: string
-  color: string
+  color?: string
 }
 
-function Saludo({ nombre }: Props) {
-  return <div>Hola {nombre}</div>
+function Saludo({ nombre, color = "yellow" }: Props) {
+  const estilo: CSSProperties = { color }
+  
+  return <div style={estilo}>Hola {nombre}</div>
 }
 
 export default Saludo
