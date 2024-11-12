@@ -17,6 +17,7 @@ const FormularioCards = () => {
     event.stopPropagation()
     console.log("Has hecho clic en el botón")
   }
+  // TODO: Pendiente de evitar la propagación al hacer clic en el input
   return (
     <div
       onClick={changeColor}
