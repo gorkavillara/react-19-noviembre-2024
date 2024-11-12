@@ -1,41 +1,52 @@
 import { useState } from "react"
 import "./App.css"
-import ComponenteFuncionalCicloDeVida from "./components/ComponenteFuncionalCicloDeVida"
-import { generaNombre } from "./lib/utils"
+import FormularioEjemplo from "./components/FormularioEjemplo"
+import ComponenteReferencias from "./components/ComponenteReferencias"
+import ComponenteEventos from "./components/ComponenteEventos"
+import ComponenteEventosTeclado from "./components/ComponenteEventosTeclado"
+import FormularioCards from "./components/FormularioCards"
 
-const muyLenta = () => {
-  const datos = 10000000
-  for (let i = 0; i<datos; i++) {
-    const a = 1
-  }
-}
-
-const funcionAsincrona = async () => {
-  return new Promise((res) => {
-    setTimeout(() => {
-      res(true)
-    }, 2000)
-  })
-}
 
 function App() {
-  const [visible, setVisible] = useState(false)
-  const [nombre, setNombre] = useState<string | null>(null)
-  const toggleVisible = async () => {
-    // const miConstante = { nombre: generaNombre() }
-    // setNombre(miConstante.nombre)
-    // console.time("funcionLenta")
-    // muyLenta()
-    // console.timeEnd("funcionLenta")
-    // setVisible((vis) => !vis)
-    await funcionAsincrona()
-    console.log(true)
+  const [nombre, setNombre] = useState("")
+  function handleClick() {
+    console.log("handleClick")
+  }
+  // function devuelveFuncion() {
+  //   return () => {
+  //     console.log("función dentro de la función")
+  //   }
+  // }
+  const handleSubmit = (evento: React.FormEvent) => {
+    evento.preventDefault()
+    console.log(evento)
+    // Aquí hacemos las llamadas necesarias a las API
+    // fetch('https://api.pruebas.com/usuarios', {
+    //   method: "POST",
+    //   body: JSON.stringify({})
+    // })
+    console.log("He enviado el formulario")
+  }
+  const handleChange = (evento: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(evento.target.value)
+    setNombre(evento.target.value)
   }
   return (
     <div>
-      {visible ? <ComponenteFuncionalCicloDeVida /> : null}
-      <button onClick={toggleVisible} id={nombre || "idgenerico"}>{visible ? "Ocultar" : "Mostrar"}</button>
-      {nombre && <p>Hola {nombre}</p>}
+      <h4>Eventos & Referencias</h4>
+      <FormularioCards />
+      {/* <ComponenteEventosTeclado /> */}
+      {/* <ComponenteEventos /> */}
+      {/* <ComponenteReferencias /> */}
+      {/* <FormularioEjemplo /> */}
+      {/* <button onClick={handleClick}>Haz clic</button> */}
+      {/* <button onClick={handleClick()}>Haz clic</button> */}
+      {/* <button onClick={() => console.log("Evento")}>Haz clic</button> */}
+      {/* <button onClick={devuelveFuncion()}>Funcion generadora</button> */}
+      {/* <form onSubmit={handleSubmit}>
+        <input type="text" value={nombre} onChange={handleChange} />
+        <button type="submit">Enviar</button>
+      </form> */}
     </div>
   )
 }
