@@ -1,54 +1,91 @@
-import { useState } from "react"
-import "./App.css"
-import FormularioEjemplo from "./components/FormularioEjemplo"
-import ComponenteReferencias from "./components/ComponenteReferencias"
-import ComponenteEventos from "./components/ComponenteEventos"
-import ComponenteEventosTeclado from "./components/ComponenteEventosTeclado"
-import FormularioCards from "./components/FormularioCards"
+import React, { useState, useEffect, useRef } from "react";
 
+const wordsArray = [
+  "react", "javascript", "typescript", "programming", "function", "component", 
+  "state", "props", "effect", "hook", "array", "object", "variable", "constant",
+  "keyboard", "mouse", "display", "screen", "debugging", "development"
+];
 
 function App() {
-  const [nombre, setNombre] = useState("")
-  function handleClick() {
-    console.log("handleClick")
-  }
-  // function devuelveFuncion() {
-  //   return () => {
-  //     console.log("función dentro de la función")
-  //   }
-  // }
-  const handleSubmit = (evento: React.FormEvent) => {
-    evento.preventDefault()
-    console.log(evento)
-    // Aquí hacemos las llamadas necesarias a las API
-    // fetch('https://api.pruebas.com/usuarios', {
-    //   method: "POST",
-    //   body: JSON.stringify({})
-    // })
-    console.log("He enviado el formulario")
-  }
-  const handleChange = (evento: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(evento.target.value)
-    setNombre(evento.target.value)
-  }
+  const [currentWord, setCurrentWord] = useState<string>("");
+  const [inputText, setInputText] = useState<string>("");
+  const [correctCount, setCorrectCount] = useState<number>(0);
+  const [incorrectCount, setIncorrectCount] = useState<number>(0);
+  const [timeLeft, setTimeLeft] = useState<number>(60);
+  const [isRunning, setIsRunning] = useState<boolean>(false);
+  const charactersTyped = useRef<number>(0);
+
+  const getRandomWord = () => {
+    const randomIndex = Math.floor(Math.random() * wordsArray.length);
+    return wordsArray[randomIndex];
+  };
+
+  const startTest = () => {
+    setInputText("");
+    setCorrectCount(0);
+    setIncorrectCount(0);
+    setTimeLeft(60);
+    charactersTyped.current = 0;
+    setCurrentWord(getRandomWord());
+    setIsRunning(true);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputText(e.target.value);
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      if (inputText.trim() === currentWord) {
+        setCorrectCount((prev) => prev + 1);
+        charactersTyped.current += inputText.trim().length;
+      } else {
+        setIncorrectCount((prev) => prev + 1);
+      }
+      setInputText("");
+      setCurrentWord(getRandomWord());
+    }
+  };
+
+  useEffect(() => {
+    if (isRunning && timeLeft > 0) {
+      const timer = setInterval(() => {
+        setTimeLeft((prevTime) => prevTime - 1);
+      }, 1000);
+
+      return () => clearInterval(timer);
+    } else if (timeLeft === 0) {
+      setIsRunning(false);
+      alert(
+        `¡Enhorabuena! Tiempo terminado. 
+        Palabras correctas: ${correctCount}, 
+        Palabras incorrectas: ${incorrectCount}, 
+        Caracteres por minuto: ${charactersTyped.current}`
+      );
+    }
+  }, [isRunning, timeLeft, correctCount, incorrectCount]);
+
   return (
-    <div>
-      <h4>Eventos & Referencias</h4>
-      <FormularioCards />
-      {/* <ComponenteEventosTeclado /> */}
-      {/* <ComponenteEventos /> */}
-      {/* <ComponenteReferencias /> */}
-      {/* <FormularioEjemplo /> */}
-      {/* <button onClick={handleClick}>Haz clic</button> */}
-      {/* <button onClick={handleClick()}>Haz clic</button> */}
-      {/* <button onClick={() => console.log("Evento")}>Haz clic</button> */}
-      {/* <button onClick={devuelveFuncion()}>Funcion generadora</button> */}
-      {/* <form onSubmit={handleSubmit}>
-        <input type="text" value={nombre} onChange={handleChange} />
-        <button type="submit">Enviar</button>
-      </form> */}
+    <div style={{ textAlign: "center" }}>
+      <h2>Typing Test</h2>
+      <p>Tiempo restante: {timeLeft} segundos</p>
+      <p>Palabra a escribir:</p>
+      <blockquote>{currentWord}</blockquote>
+      <input
+        type="text"
+        value={inputText}
+        onChange={handleInputChange}
+        onKeyDown={handleKeyPress}
+        placeholder="Escribe la palabra y presiona Enter"
+        style={{ width: "80%", padding: "10px", fontSize: "16px" }}
+      />
+      <p>Palabras correctas: {correctCount}</p>
+      <p>Palabras incorrectas: {incorrectCount}</p>
+      {!isRunning && (
+        <button onClick={startTest}>Iniciar prueba</button>
+      )}
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
