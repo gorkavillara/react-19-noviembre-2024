@@ -1,25 +1,6 @@
-export const generaNombre = () => {
-  return "Josemi"
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
 }
-
-export const miFuncion = () => {
-  return {
-    nombre: "Diego",
-    edad: 27,
-  }
-}
-
-// const { nombre } = miFuncion()
-
-// const miObjeto = {
-//     nombre: "Gorka",
-//     edad: 32
-// }
-
-// const { edad } = miObjeto
-
-// const funcionFlecha = () => true
-
-// const funcionDevuelveObjeto = () => ({
-//   nombre: "gorka",
-// })
