@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 
 const wordsArray = [
-  "react", "javascript", "typescript", "programming", "function", "component", 
-  "state", "props", "effect", "hook", "array", "object", "variable", "constant",
-  "keyboard", "mouse", "display", "screen", "debugging", "development"
+  "react", "typescript", "javascript", "html", "css", "frontend", "backend",
+  "component", "state", "props", "hook", "useEffect", "useState", "API", 
+  "npm", "node", "express", "router", "typescript", "asynchronous", 
+  "json", "jsx", "tsx", "render", "promise", "event", "function", 
+  "context", "module", "babel", "var", "realsociedad", "barça", "lewandoski"
 ];
+
 
 function App() {
   const [currentWord, setCurrentWord] = useState<string>("");
