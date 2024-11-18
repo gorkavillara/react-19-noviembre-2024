@@ -1,0 +1,11 @@
+button {
+    background-color: red;
+}
+
+button.success {
+    background-color: green;
+}
+
+button.info {
+    background-color: blue;
+}
