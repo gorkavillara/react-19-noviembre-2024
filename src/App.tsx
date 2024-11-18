@@ -1,82 +1,31 @@
-import { useState, useRef } from "react"
+import { useState } from "react"
 import "./App.css"
+import { Home, About, Contact } from "./views"
 
-interface Alumno {
-  id: number | string
-  nombre: string
-  nota: number
-}
+type Route = "Home" | "About" | "Contact"
 
-const alumnos: Alumno[] = [
-  {
-    id: 1,
-    nombre: "Diego",
-    nota: 8,
-  },
-  {
-    id: 2,
-    nombre: "Antonio",
-    nota: 10,
-  },
-  {
-    id: 3,
-    nombre: "Adrián",
-    nota: 10,
-  },
-  {
-    id: 4,
-    nombre: "Albert",
-    nota: 8,
-  },
-]
+const RouteView = ({ routeName }: { routeName: Route }) => {
+  if (routeName === "Home") return <Home />
+  if (routeName === "About") return <About />
+  if (routeName === "Contact") return <Contact />
 
-interface Todo {
-  id: number | string
-  text: string
-  completed: boolean
+  return <h3>Ruta no encontrada</h3>
 }
 
 const App = () => {
-  // const [todos, setTodos] = useState<Todo[]>([])
-  // const [inputValue, setInputValue] = useState("")
-  const [notaMinima, setNotaMinima] = useState(0)
-  const inputRef = useRef<HTMLInputElement>(null)
-
-  const actualizaNotaMinima = () => {
-    // Obtener el valor del input
-    if (!inputRef.current) return
-
-    const valorDelInput = Number(inputRef.current.value)
-
-    setNotaMinima(valorDelInput)
-    console.log(valorDelInput)
-    console.log(typeof valorDelInput)
-  }
-
-  // console.log("Me he renderizado")
+  const [route, setRoute] = useState<Route>("Home")
   return (
-    <>
-      <h1>Ejercicios con listas</h1>
-      <input
-        type="number"
-        ref={inputRef}
-        min={0}
-        max={10}
-        // value={inputValue}
-        // onChange={e => setInputValue(e.target.value)}
-        placeholder="Introduce la nota mínima"
-      />
-      <button onClick={actualizaNotaMinima}>Buscar</button>
-      <ul>
-        {alumnos
-          .filter((alumno) => alumno.nota >= notaMinima)
-          .map((alumno) => (
-            <li key={alumno.id}>
-              {alumno.id}. {alumno.nombre}: {alumno.nota}
-            </li>
-          ))}
-      </ul>
-    </>
+    <div>
+      <RouteView routeName={route} />
+      {route === "Home" ? <Home /> : null}
+      {route === "About" ? <About /> : null}
+      {route === "Contact" && <Contact />}
+      <div style={{ marginTop: "1rem" }}>
+        <button onClick={() => setRoute("Home")}>Ir a Home</button>
+        <button onClick={() => setRoute("About")}>Ir a About</button>
+        <button onClick={() => setRoute("Contact")}>Ir a Contact</button>
+      </div>
+    </div>
   )
 }
 
