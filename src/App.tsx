@@ -1,10 +1,9 @@
 import "./App.css"
-import FormularioActionState from "./views/Forms/FormularioActionState"
 
 const App = () => {
   return (
     <div>
-      <FormularioActionState />
+      <h1>Hola mundo</h1>
     </div>
   )
 }

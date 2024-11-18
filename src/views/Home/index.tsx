@@ -1,13 +1,14 @@
-import ButtonList from "./components/ButtonList"
-// import "./Home.css"
+import { Link, NavLink } from "react-router-dom"
 import styles from "./Home.module.css"
 
 const Home = () => {
   return (
     <div>
-      <button className={styles.info}>Botón info</button>
-      <button className={styles.success}>Botón</button>
-      <ButtonList />
+      <nav className={styles.NavBar}>
+        <Link to="/contact">Contacto</Link>
+        <Link to="/about">About</Link>
+      </nav>
+      <p>Esta es la home</p>
     </div>
   )
 }
