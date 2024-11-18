@@ -37,23 +37,44 @@ interface Todo {
 }
 
 const App = () => {
-  const [todos, setTodos] = useState<Todo[]>([])
-  const [inputValue, setInputValue] = useState("")
+  // const [todos, setTodos] = useState<Todo[]>([])
+  // const [inputValue, setInputValue] = useState("")
+  const [notaMinima, setNotaMinima] = useState(0)
   const inputRef = useRef<HTMLInputElement>(null)
+
+  const actualizaNotaMinima = () => {
+    // Obtener el valor del input
+    if (!inputRef.current) return
+
+    const valorDelInput = Number(inputRef.current.value)
+
+    setNotaMinima(valorDelInput)
+    console.log(valorDelInput)
+    console.log(typeof valorDelInput)
+  }
+
+  // console.log("Me he renderizado")
   return (
     <>
       <h1>Ejercicios con listas</h1>
       <input
-        type="text"
+        type="number"
         ref={inputRef}
+        min={0}
+        max={10}
+        // value={inputValue}
+        // onChange={e => setInputValue(e.target.value)}
+        placeholder="Introduce la nota mínima"
       />
-      <button>Añadir</button>
+      <button onClick={actualizaNotaMinima}>Buscar</button>
       <ul>
-        {alumnos.map((alumno) => (
-          <li key={alumno.id}>
-            {alumno.id}. {alumno.nombre}: {alumno.nota}
-          </li>
-        ))}
+        {alumnos
+          .filter((alumno) => alumno.nota >= notaMinima)
+          .map((alumno) => (
+            <li key={alumno.id}>
+              {alumno.id}. {alumno.nombre}: {alumno.nota}
+            </li>
+          ))}
       </ul>
     </>
   )
