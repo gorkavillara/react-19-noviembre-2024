@@ -1,11 +1,8 @@
 import "./App.css"
+import PokemonAxiosInstance from "./components/PokemonAxiosInstance"
 
 const App = () => {
-  return (
-    <div>
-      <h1>Hola mundo</h1>
-    </div>
-  )
+  return <PokemonAxiosInstance />
 }
 
 export default App

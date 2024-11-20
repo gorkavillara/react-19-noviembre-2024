@@ -13,7 +13,7 @@ import ProtectedRoute from "./components/ProtectedRoute"
 export const routes: RouteObject[] = [
   {
     path: "/",
-    element: <Layout />,
+    element: <App />,
     children: [
       {
         path: "home",
