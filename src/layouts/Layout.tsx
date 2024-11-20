@@ -1,13 +1,15 @@
-import { Link, Outlet } from "react-router-dom"
+import { Outlet } from "react-router-dom"
+import styles from "./Layout.module.css"
+import { links } from "../assets/constants"
+import { NavbarComponent } from "./components/NavbarComponent"
 
 const Layout = () => {
   return (
     <div>
-      <nav>
-        <Link to="/contact">Contacto</Link>
-        <Link to="/about">About</Link>
-      </nav>
-      <Outlet />
+      <NavbarComponent links={links} />
+      <div className={styles.Content}>
+        <Outlet />
+      </div>
     </div>
   )
 }
