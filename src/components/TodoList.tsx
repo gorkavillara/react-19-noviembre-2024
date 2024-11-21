@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { addTodo } from "../features/todo/todoSlice"
 import { RootState } from "../app/store"
 import { useState } from "react"
+import Check from "./common/Check"
 
 const TodoList = () => {
   const [newTodo, setNewTodo] = useState("")
@@ -25,7 +26,12 @@ const TodoList = () => {
       <button onClick={handleClick}>Nuevo Todo</button>
       <ul>
         {todos.map((todo) => (
-          <li key={todo.id}>{todo.text}</li>
+          <li key={todo.id}>
+            {todo.text} -{" "}
+            <span style={{ cursor: "pointer" }}>
+              <Check />
+            </span>
+          </li>
         ))}
       </ul>
     </div>
