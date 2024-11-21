@@ -1,4 +1,4 @@
-import { useActionState, useRef } from "react"
+import { useActionState, useRef, useState } from "react"
 
 interface Pokemon {
   id: number
@@ -29,6 +29,9 @@ const PokemonFetch = () => {
       //   .then((data) => console.log(data))
       //   .catch((error) => console.error(error))
       //   .finally(() => {})
+      // fetch(url)
+      //   .then(res => res.json())
+      //   .then(data => console.log(data))
 
       // console.log("hola")
 

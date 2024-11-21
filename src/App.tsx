@@ -1,8 +1,12 @@
 import "./App.css"
-import PokemonAxiosInstance from "./components/PokemonAxiosInstance"
+import PokemonFetchHook from "./components/PokemonFetchHook"
 
 const App = () => {
-  return <PokemonAxiosInstance />
+  return (
+    <>
+      <PokemonFetchHook pokemonId="25" />
+    </>
+  )
 }
 
 export default App
