@@ -1,23 +1,19 @@
-import { useSelector, useDispatch } from "react-redux"
-import { addTodo, completeTodo } from "../features/todo/todoSlice"
-import { RootState } from "../app/store"
-import { useState } from "react"
+import { useState, useContext, use } from "react"
 import Check from "./common/Check"
+import { TodoContext } from "../contexts/TodoContextProvider"
+import { useTodos } from "../hooks/useTodos"
 
 const TodoList = () => {
+  const { todos, addTodo } = use(TodoContext)
+  // const { todos } = useTodos()
   const [newTodo, setNewTodo] = useState("")
-  const todos = useSelector((state: RootState) => state.todos)
-  console.log(todos)
-  const dispatch = useDispatch()
-
   const handleClick = () => {
     // Obtenemos cierta información de una API de manera asíncrona
-    dispatch(addTodo(newTodo)) // Siempre será síncrono
-    setNewTodo("")
+    addTodo(newTodo)
   }
 
   const completeSingleTodo = (id: string) => {
-    dispatch(completeTodo(id))
+    // TODO: Hacer
   }
   return (
     <div>
@@ -29,7 +25,7 @@ const TodoList = () => {
         onChange={(e) => setNewTodo(e.target.value)}
       />
       <button onClick={handleClick}>Nuevo Todo</button>
-      <ul>
+      {todos && <ul>
         {todos.map((todo) => (
           <li
             key={todo.id}
@@ -42,7 +38,7 @@ const TodoList = () => {
             {todo.text} - <Check />
           </li>
         ))}
-      </ul>
+      </ul>}
     </div>
   )
 }
