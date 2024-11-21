@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux"
-import { addTodo } from "../features/todo/todoSlice"
+import { addTodo, completeTodo } from "../features/todo/todoSlice"
 import { RootState } from "../app/store"
 import { useState } from "react"
 import Check from "./common/Check"
@@ -11,8 +11,13 @@ const TodoList = () => {
   const dispatch = useDispatch()
 
   const handleClick = () => {
-    dispatch(addTodo(newTodo))
+    // Obtenemos cierta información de una API de manera asíncrona
+    dispatch(addTodo(newTodo)) // Siempre será síncrono
     setNewTodo("")
+  }
+
+  const completeSingleTodo = (id: string) => {
+    dispatch(completeTodo(id))
   }
   return (
     <div>
@@ -26,11 +31,15 @@ const TodoList = () => {
       <button onClick={handleClick}>Nuevo Todo</button>
       <ul>
         {todos.map((todo) => (
-          <li key={todo.id}>
-            {todo.text} -{" "}
-            <span style={{ cursor: "pointer" }}>
-              <Check />
-            </span>
+          <li
+            key={todo.id}
+            style={{
+              cursor: "pointer",
+              textDecoration: todo.completed ? "line-through" : "",
+            }}
+            onClick={() => completeSingleTodo(todo.id)}
+          >
+            {todo.text} - <Check />
           </li>
         ))}
       </ul>

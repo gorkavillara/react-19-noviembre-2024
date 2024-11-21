@@ -20,10 +20,17 @@ const todoSlice = createSlice({
         { id: crypto.randomUUID(), text: action.payload, completed: false },
       ]
     },
-    completeTodo: () => {},
+    completeTodo: (state, action) => {
+      // pasará lo que tenga que pasar
+      const idACambiar = action.payload
+      const nuevoEstado = state.map((todo) =>
+        todo.id === idACambiar ? { ...todo, completed: true } : todo
+      )
+      return nuevoEstado
+    },
   },
 })
 
-export const { addTodo } = todoSlice.actions
+export const { addTodo, completeTodo } = todoSlice.actions
 
 export default todoSlice.reducer
