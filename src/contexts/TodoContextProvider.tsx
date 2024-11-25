@@ -8,8 +8,9 @@ interface Todo {
 }
 
 interface TodoContextType {
-  todos: Todo[],
+  todos: Todo[]
   addTodo: (newTodo: string) => void
+  toggleTodo: (id: string) => void
 }
 
 export const TodoContext = createContext<TodoContextType>(null!)
@@ -24,12 +25,22 @@ const TodoContextProvider = ({ children }: PropsWithChildren) => {
       { id: crypto.randomUUID(), text: newTodo, completed: false },
     ])
   }
-    const toggleTodo = () => {
-        // TODO: Hacer la lógica del toggleTodo (obteniendo un id como parámetro)
-        //? Tener en cuenta cambiar los tipos del TodoContextType
-    }
+  const toggleTodo = (id: string) => {
+    // TODO: Hacer la lógica del toggleTodo (obteniendo un id como parámetro)
+    // 1. Cambiamos el estado
+    setTodos((t) =>
+      t.map((todo) => {
+        if (todo.id === id) return { ...todo, completed: !todo.completed }
+
+        return todo
+      })
+    )
+    //? Tener en cuenta cambiar los tipos del TodoContextType
+  }
   return (
-    <TodoContext.Provider value={{ todos, addTodo }}>{children}</TodoContext.Provider>
+    <TodoContext.Provider value={{ todos, addTodo, toggleTodo }}>
+      {children}
+    </TodoContext.Provider>
   )
 }
 
