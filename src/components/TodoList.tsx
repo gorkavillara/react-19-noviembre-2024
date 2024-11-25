@@ -34,6 +34,7 @@ const TodoList = () => {
               textDecoration: todo.completed ? "line-through" : "",
             }}
             onClick={() => completeSingleTodo(todo.id)}
+            role="todo"
           >
             {todo.text} - <Check />
           </li>
