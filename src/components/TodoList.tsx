@@ -14,6 +14,7 @@ const TodoList = () => {
 
   const completeSingleTodo = (id: string) => {
     // TODO: Hacer
+    return id
   }
   return (
     <div>
